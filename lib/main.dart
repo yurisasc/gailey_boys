@@ -1,6 +1,9 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:gailey_boys/services/auth.dart';
+import 'package:provider/provider.dart';
 
 import 'screens/screens.dart';
 
@@ -9,17 +12,25 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      // Firebase Analytics
-      navigatorObservers: [
-        FirebaseAnalyticsObserver(analytics: FirebaseAnalytics())
+    return MultiProvider(
+      /// User data is put into the providers list, allowing all
+      /// widgets to access the data no matter how deep they
+      /// are in the widget tree.
+      providers: [
+        StreamProvider<FirebaseUser>.value(value: AuthService().user),
       ],
-      
-      // Named Routes
-      routes: {
-        '/': (context) => LoginScreen(),
-        '/timeline': (context) => TimelineScreen(),
-      },
+      child: MaterialApp(
+        // Firebase Analytics
+        navigatorObservers: [
+          FirebaseAnalyticsObserver(analytics: FirebaseAnalytics())
+        ],
+
+        // Named Routes
+        routes: {
+          '/': (context) => LoginScreen(),
+          '/timeline': (context) => TimelineScreen(),
+        },
+      ),
     );
   }
 }

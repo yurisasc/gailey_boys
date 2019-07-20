@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "964810383385",
+    "firebase_url": "https://gailey-boys.firebaseio.com",
+    "project_id": "gailey-boys",
+    "storage_bucket": "gailey-boys.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:964810383385:android:85bcb9efa1e67f39",
+        "android_client_info": {
+          "package_name": "com.kkidudes.gaileyboys"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "964810383385-snh1p60edo13f796n1d01m7u6h1rb45p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kkidudes.gaileyboys",
+            "certificate_hash": "45efc45529abd488fc4666399269c07cd307154c"
+          }
+        },
+        {
+          "client_id": "964810383385-pf38qieo8j6ha00kc74gqhb48lmfk3oc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRYFUtbkdU8PWaXfGgIlu5wbX5l_Gp30w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "964810383385-pf38qieo8j6ha00kc74gqhb48lmfk3oc.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "964810383385-tocpi1o32bot7o9h96ps7vcq45rc69c2.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.kkidudes.gaileyboys"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

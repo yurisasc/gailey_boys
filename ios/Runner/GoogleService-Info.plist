@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>964810383385-tocpi1o32bot7o9h96ps7vcq45rc69c2.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.964810383385-tocpi1o32bot7o9h96ps7vcq45rc69c2</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>964810383385-snh1p60edo13f796n1d01m7u6h1rb45p.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCL-kuNZR1bQ6fhyKD_wsCenU0gWycgszE</string>
+	<key>GCM_SENDER_ID</key>
+	<string>964810383385</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.kkidudes.gaileyboys</string>
+	<key>PROJECT_ID</key>
+	<string>gailey-boys</string>
+	<key>STORAGE_BUCKET</key>
+	<string>gailey-boys.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:964810383385:ios:85bcb9efa1e67f39</string>
+	<key>DATABASE_URL</key>
+	<string>https://gailey-boys.firebaseio.com</string>
+</dict>
+</plist>

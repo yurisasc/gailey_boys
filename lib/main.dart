@@ -1,4 +1,8 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
+
+import 'screens/screens.dart';
 
 void main() => runApp(MyApp());
 
@@ -6,22 +10,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Gailey Boys',
-      home: MyHomePage(title: 'Gailey Boys',),
-    );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  final String title;
-  const MyHomePage({Key key, this.title}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
-      ),
+      // Firebase Analytics
+      navigatorObservers: [
+        FirebaseAnalyticsObserver(analytics: FirebaseAnalytics())
+      ],
+      
+      // Named Routes
+      routes: {
+        '/': (context) => LoginScreen(),
+        '/timeline': (context) => TimelineScreen(),
+      },
     );
   }
 }

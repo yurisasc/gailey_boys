@@ -76,7 +76,7 @@ class LoginButton extends StatelessWidget {
         onPressed: () async {
           var user = await loginMethod();
           if (user != null) {
-            Navigator.pushReplacementNamed(context, '/timeline');
+            Navigator.pushReplacementNamed(context, '/chooseLodge');
           }
         },
       ),

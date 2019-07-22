@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class User {
   String name;
   String uid;
   String img;
-  DateTime lastActivity;
+  Timestamp lastActivity;
   List<Lodge> lodges;
 
   double amountPaid;
@@ -65,8 +67,8 @@ class Task {
   String name;
   String desc;
   List<User> contributors;
-  DateTime createdDate;
-  DateTime dueDate;
+  Timestamp createdDate;
+  Timestamp dueDate;
 
   Task(
       {this.id,
@@ -97,7 +99,7 @@ class Receipt {
   double price;
   double amountPaid;
   String img;
-  DateTime createdDate;
+  Timestamp createdDate;
   List<User> contributions;
 
   Receipt(
@@ -143,7 +145,7 @@ class Lodge {
   factory Lodge.fromMap(Map data) {
     return Lodge(
       id: data['id'],
-      admins: data['admins'] as List ?? [],
+      admins: (data['admins'] as List ?? []).map((v) => '$v').toList(),
       members:
           (data['members'] as List ?? []).map((v) => User.fromMap(v)).toList(),
       name: data['name'],

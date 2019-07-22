@@ -48,6 +48,7 @@ class AuthService {
     return userRef.setData({
       'uid': user.uid,
       'lastActivity': DateTime.now(),
+      'name': user.displayName,
     }, merge: true);
   }
 

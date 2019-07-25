@@ -1,16 +1,20 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:gailey_boys/services/globals.dart';
-import 'package:gailey_boys/services/models.dart';
+import 'package:gailey_boys/blocs/lodge_bloc.dart';
+import 'package:gailey_boys/models/models.dart';
+import 'package:gailey_boys/screens/timeline.dart';
 import 'package:provider/provider.dart';
 
+import 'screens.dart';
+
 class LodgeState with ChangeNotifier {
-  String _lodgeId;
+  Lodge _lodge;
 
-  get lodgeId => _lodgeId;
+  get lodge => _lodge;
 
-  set lodgeId(String newValue) {
-    _lodgeId = newValue;
+  set lodge(Lodge newValue) {
+    _lodge = newValue;
     notifyListeners();
   }
 }
@@ -18,32 +22,50 @@ class LodgeState with ChangeNotifier {
 class ChooseLodgeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var user = Provider.of<User>(context);
-    return FutureBuilder(
-      future: LodgeService.getUserLodge(),
-      builder: (BuildContext context, AsyncSnapshot snap) {
-        if (snap.hasData) {
-          List<Lodge> lodges = snap.data;
+    User user = Provider.of<User>(context);
+    if (user != null) {
+      List<Lodge> lodges = Provider.of<List<Lodge>>(context);
+      if (lodges != null) {
+        Lodge activeLodge = Provider.of<Lodge>(context);
+        if (activeLodge == null) {
           return Scaffold(
             appBar: AppBar(
               title: Text('Choose Lodge'),
             ),
-            body: GridView.count(
-              primary: false,
-              padding: const EdgeInsets.all(20.0),
-              crossAxisSpacing: 10.0,
-              crossAxisCount: 2,
-              children: lodges.map((lodge) => LodgeItem(lodge: lodge)).toList(),
-            ),
+            body: LodgeItems(lodges: lodges),
           );
         } else {
-          return Scaffold(
-            appBar: AppBar(
-              title: Text('Choose Lodge'),
-            ),
-          );
+          return TimelineScreen(lodge: activeLodge);
         }
-      },
+      } else {
+        return Scaffold(
+          appBar: AppBar(
+            title: Text('Choose Lodge'),
+          ),
+        );
+      }
+    } else {
+      return LoginScreen();
+    }
+  }
+}
+
+class LodgeItems extends StatelessWidget {
+  const LodgeItems({
+    Key key,
+    @required this.lodges,
+  }) : super(key: key);
+
+  final List<Lodge> lodges;
+
+  @override
+  Widget build(BuildContext context) {
+    return GridView.count(
+      primary: false,
+      padding: const EdgeInsets.all(20.0),
+      crossAxisSpacing: 10.0,
+      crossAxisCount: 1,
+      children: lodges.map((lodge) => LodgeItem(lodge: lodge)).toList(),
     );
   }
 }
@@ -54,8 +76,29 @@ class LodgeItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var user = Provider.of<FirebaseUser>(context);
     return Container(
-      child: Text(lodge.name),
+      child: Card(
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          onTap: () async {
+            LodgeService.selectLodge(user, lodge.id);
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => TimelineScreen(lodge: lodge)),
+              (route) => false,
+            );
+          },
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(lodge.name),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

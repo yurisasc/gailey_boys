@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:gailey_boys/blocs/lodge_bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthService {
@@ -53,7 +54,11 @@ class AuthService {
   }
 
   /// Function to sign out
-  Future<void> signOut() {
+  Future<void> signOut() async {
+    WriteBatch batch = Firestore.instance.batch();
+    batch = await LodgeService.onSignOut(batch, getUser);
+
+    await batch.commit();
     return _auth.signOut();
   }
 

@@ -5,9 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:gailey_boys/screens/lodges.dart';
 import 'package:gailey_boys/services/auth.dart';
 import 'package:gailey_boys/services/globals.dart';
-import 'package:gailey_boys/services/models.dart';
 import 'package:provider/provider.dart';
 
+import 'blocs/lodge_bloc.dart';
+import 'models/models.dart';
 import 'screens/screens.dart';
 
 void main() => runApp(MyApp());
@@ -21,6 +22,8 @@ class MyApp extends StatelessWidget {
       /// are in the widget tree.
       providers: [
         StreamProvider<User>.value(value: Global.userRef.documentStream),
+        StreamProvider<List<Lodge>>.value(value: LodgeService.getLodgesStream()),
+        StreamProvider<Lodge>.value(value: LodgeService.activeLodgeStream()),
         StreamProvider<FirebaseUser>.value(value: AuthService().user),
       ],
       child: MaterialApp(

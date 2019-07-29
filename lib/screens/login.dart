@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:gailey_boys/services/auth.dart';
+import 'package:gailey_boys/services/user_repository.dart';
+import 'package:gailey_boys/shared/loaders/color_loader.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -8,22 +10,14 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final AuthService auth = AuthService();
-
   @override
   void initState() {
     super.initState();
-    auth.getUser.then(
-      (user) {
-        if (user != null) {
-          Navigator.pushReplacementNamed(context, '/timeline');
-        }
-      }
-    );
   }
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserRepository>(context);
     return Scaffold(
       body: Center(
         child: Padding(
@@ -41,12 +35,14 @@ class _LoginScreenState extends State<LoginScreen> {
                 style: Theme.of(context).textTheme.headline,
               ),
               SizedBox(height: 80),
-              LoginButton(
-                color: Colors.red[300],
-                icon: FontAwesomeIcons.google,
-                text: 'Sign in with Google',
-                loginMethod: auth.googleSignIn,
-              ),
+              user.status == Status.Authenticating
+                  ? Center(child: ColorLoader4())
+                  : LoginButton(
+                      color: Colors.red[300],
+                      icon: FontAwesomeIcons.google,
+                      text: 'Sign in with Google',
+                      loginMethod: user.googleSignIn,
+                    ),
             ],
           ),
         ),
@@ -74,10 +70,7 @@ class LoginButton extends StatelessWidget {
         icon: Icon(icon),
         label: Text(text),
         onPressed: () async {
-          var user = await loginMethod();
-          if (user != null) {
-            Navigator.pushReplacementNamed(context, '/chooseLodge');
-          }
+          await loginMethod();
         },
       ),
     );

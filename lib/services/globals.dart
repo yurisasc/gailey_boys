@@ -1,6 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:gailey_boys/models/models.dart';
 import 'package:gailey_boys/services/db.dart';
-import 'package:gailey_boys/services/models.dart';
+import 'package:gailey_boys/services/strings.dart';
 
 /// Static global state
 class Global {
@@ -13,25 +14,12 @@ class Global {
     Lodge: (data) => Lodge.fromMap(data),
   };
 
+  static final Map actionItemsIcon = {
+    Strings.action_changeLodge: Icons.view_agenda,
+    Strings.action_settings: Icons.settings,
+  };
+
   // Firestore reference for writes
   static final Collection<Lodge> lodgesRef = Collection<Lodge>(path: 'lodges');
   static final UserData<User> userRef = UserData<User>(collection: 'users');
-}
-
-/// Static services to query data
-class LodgeService {
-  static final FirebaseAuth _auth = FirebaseAuth.instance;
-  static Collection<Lodge> lodgeRef = Collection<Lodge>(path: 'lodges');
-
-  static Future<List<Lodge>> getUserLodge() async {
-    FirebaseUser user = await _auth.currentUser();
-    if (user != null) {
-      var snapshots = await lodgeRef.ref
-          .where('memberIds', arrayContains: user.uid)
-          .getDocuments();
-      return snapshots.documents.map((doc) => Lodge.fromMap(doc.data)).toList();
-    } else {
-      return [];
-    }
-  }
 }

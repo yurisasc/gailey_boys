@@ -47,14 +47,6 @@ class LodgeService {
       'isActive': FieldValue.arrayRemove([uid]),
     };
 
-    // lodgeRef.ref
-    //     .where('isActive', arrayContains: uid)
-    //     .snapshots()
-    //     .listen((data) => data.documents.forEach((doc) {
-    //           batch.updateData(doc.reference, newData);
-    //           return batch;
-    //         }));
-
     var a = await lodgeRef.ref
         .where('isActive', arrayContains: uid)
         .snapshots()
@@ -69,13 +61,7 @@ class LodgeService {
     var newData = {
       'isActive': FieldValue.arrayUnion([uid]),
     };
-    // lodgeRef.ref
-    //     .where('id', isEqualTo: lodgeId)
-    //     .snapshots()
-    //     .listen((data) => data.documents.forEach((doc) {
-    //           batch.updateData(doc.reference, newData);
-    //           return batch;
-    //         }));
+
     var a = await lodgeRef.ref
         .where('id', isEqualTo: lodgeId)
         .snapshots()

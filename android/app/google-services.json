@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "964810383385-g5lugclmp62sui8h889hckchn1vm269j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kkidudes.gaileyboys",
+            "certificate_hash": "679a1c572a3dd91f06dc74877ee02f6c79d08a93"
+          }
+        },
+        {
           "client_id": "964810383385-snh1p60edo13f796n1d01m7u6h1rb45p.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

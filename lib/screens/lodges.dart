@@ -3,10 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:gailey_boys/blocs/lodge_bloc.dart';
 import 'package:gailey_boys/models/models.dart';
-import 'package:gailey_boys/screens/timeline.dart';
 import 'package:provider/provider.dart';
-
-import 'screens.dart';
 
 class LodgeState with ChangeNotifier {
   Lodge _lodge;
@@ -22,31 +19,30 @@ class LodgeState with ChangeNotifier {
 class ChooseLodgeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    User user = Provider.of<User>(context);
-    if (user != null) {
-      List<Lodge> lodges = Provider.of<List<Lodge>>(context);
-      if (lodges != null) {
-        Lodge activeLodge = Provider.of<Lodge>(context);
-        if (activeLodge == null) {
-          return Scaffold(
-            appBar: AppBar(
-              title: Text('Choose Lodge'),
-            ),
-            body: LodgeItems(lodges: lodges),
-          );
-        } else {
-          return TimelineScreen(lodge: activeLodge);
-        }
-      } else {
-        return Scaffold(
-          appBar: AppBar(
-            title: Text('Choose Lodge'),
-          ),
-        );
-      }
+    // FirebaseUser user = Provider.of<FirebaseUser>(context);
+    // if (user != null) {
+    List<Lodge> lodges = Provider.of<List<Lodge>>(context);
+    if (lodges != null) {
+      // if (activeLodge == null) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text('Choose Lodge'),
+        ),
+        body: LodgeItems(lodges: lodges),
+      );
+      // } else {
+      //   return TimelineScreen(lodge: activeLodge);
+      // }
     } else {
-      return LoginScreen();
+      return Scaffold(
+        appBar: AppBar(
+          title: Text('Choose Lodge'),
+        ),
+      );
     }
+    // } else {
+    //   return LoginScreen();
+    // }
   }
 }
 
@@ -83,12 +79,6 @@ class LodgeItem extends StatelessWidget {
         child: InkWell(
           onTap: () async {
             LodgeService.selectLodge(user, lodge.id);
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => TimelineScreen(lodge: lodge)),
-              (route) => false,
-            );
           },
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

@@ -3,8 +3,8 @@ import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gailey_boys/screens/lodges.dart';
-import 'package:gailey_boys/services/auth.dart';
 import 'package:gailey_boys/services/globals.dart';
+import 'package:gailey_boys/services/user_repository.dart';
 import 'package:provider/provider.dart';
 
 import 'blocs/lodge_bloc.dart';
@@ -22,22 +22,45 @@ class MyApp extends StatelessWidget {
       /// are in the widget tree.
       providers: [
         StreamProvider<User>.value(value: Global.userRef.documentStream),
-        StreamProvider<List<Lodge>>.value(value: LodgeService.getLodgesStream()),
+        StreamProvider<List<Lodge>>.value(
+            value: LodgeService.getLodgesStream()),
         StreamProvider<Lodge>.value(value: LodgeService.activeLodgeStream()),
-        StreamProvider<FirebaseUser>.value(value: AuthService().user),
+        StreamProvider<FirebaseUser>.value(
+            value: FirebaseAuth.instance.onAuthStateChanged),
+        ChangeNotifierProvider<UserRepository>.value(
+            value: UserRepository.instance()),
       ],
       child: MaterialApp(
-        // Firebase Analytics
         navigatorObservers: [
           FirebaseAnalyticsObserver(analytics: FirebaseAnalytics())
         ],
+        home: Consumer<UserRepository>(
+          builder: (context, UserRepository user, _) {
+            switch (user.status) {
+              case Status.Uninitialized:
+                return Splash();
+              case Status.Unauthenticated:
+                return LoginScreen();
+              case Status.Authenticating:
+                return LoginScreen();
+              case Status.Authenticated:
+                return ChooseLodgeScreen();
+              case Status.SelectedLodge:
+                return TimelineScreen(lodge: UserRepository.activeLodge);
+            }
+          },
+        ),
+      ),
+    );
+  }
+}
 
-        // Named Routes
-        routes: {
-          '/': (context) => LoginScreen(),
-          '/chooseLodge': (context) => ChooseLodgeScreen(),
-          '/timeline': (context) => TimelineScreen(),
-        },
+class Splash extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      child: Center(
+        child: Text("Splash Screen"),
       ),
     );
   }
